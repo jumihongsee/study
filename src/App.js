@@ -5,14 +5,17 @@ import {  Button, Navbar, Container, Nav } from 'react-bootstrap'
 import { useState } from 'react';
 import  data from './data.js'
 import { Routes, Route, Link, useNavigate, Outlet } from 'react-router-dom'
-import Main from './pages/Main.js';
+import 이미지 from './img/bg.png'
 import Detail from './pages/Detail.js';
+import axois from 'axios'
+
 
 
 function App() {
 
 
-  let [shoes] = useState(data)
+  // 아주 고귀하신 데이터 
+  let [shoes, setShoes] = useState(data)
 
   let navigate = useNavigate();
 
@@ -39,11 +42,77 @@ function App() {
       </Navbar>
 
       <Routes>
+
+
+
         <Route path='/' element={ 
               <>
-                <Main shoes={shoes} navigate={navigate}/>
+                <div className='main-bg' style={{backgroundImage : `url(${이미지})`}}></div> 
+                <div>
+   
+                <Button className='main-btn' 
+                  onClick={()=>{
+                    let copy = [...shoes];
+                    let sortArry = copy.sort((a,b)=>{
+                      
+                        if(a.title < b.title){
+                          return -1
+                        }else if(a.title > b.title){
+                          return 1
+                        }
+                        return 0 
+                    });
+                    setShoes(sortArry)
+                  }}
+                >정렬</Button>
+                <Button className='main-btn'
+                  onClick={()=>{
+                    axois.get('https://codingapple1.github.io/shop/data2.json')
+                    .then((결과)=>{ // ajax 요청 성공 
+                  
+                      let resultData = 결과.data
+
+                      let copy = [...shoes]
+                      let combineArry = copy.concat(resultData);
+                      console.log(combineArry)
+                      setShoes(combineArry);
+                      
+
+                    })
+                    .catch(()=>{ // ajax 요청 실패할 경우
+                      console.log('실패함')
+                    })
+                  
+                  }}
+                >더보기</Button>
+                <div className="container" >
+                  <div className="row">
+                  {
+                  shoes.map((a,i)=>{
+                        return(
+                          <Card 
+                            key = {i}
+                            shoes={shoes[i]}
+                            i = {i}
+                            navigate ={navigate}
+                          ></Card>
+                        )
+                    })
+                  }
+                  </div>
+
+                </div> 
+              </div>
+
+
+
+
+
+
               </>          
           } />
+
+
         <Route path='/detail/:urlId' element={ // :id url 파라미터 (페이지 여러게 만들고 싶으면) 
           <div>   
             <Detail  shoes={shoes}  /> 
@@ -95,4 +164,22 @@ function Event(){
       <Outlet></Outlet>
     </>
   )
+}
+
+
+
+ function Card(props){
+
+  return(
+    <div className="col-md-4">
+      <img
+      
+        onClick={()=>{props.navigate(`/detail/${props.shoes.id}`)}}
+
+      src={`https://codingapple1.github.io/shop/shoes${props.shoes.id + 1}.jpg`} width="80%" />
+      <h4>{props.shoes.title}</h4>
+      <p>{props.shoes.price}</p>
+    </div>
+  )
+
 }

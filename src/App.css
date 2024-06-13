@@ -37,6 +37,9 @@
 .logo{
   width: 50px;
 }
+.main-btn{
+  margin: 30px 5px 0 5px;
+}
 
 @keyframes App-logo-spin {
   from {

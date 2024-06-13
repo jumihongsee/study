@@ -49,6 +49,7 @@ function Detail(props){
       }
    
    }, [count, inputValue]) 
+   
    // 디펜던시 [] : 컴포넌트가 장착될 시 1회만 실행하고 싶으면 ㄱㄱ
    // 2. [] : mount (장착) 시 1회 코드 실행하고 싶으면 ㄱㄱ
    // 3. [state명] : 특정 state 변경시에만 실행하고싶으면 [state명]
