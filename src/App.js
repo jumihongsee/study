@@ -8,6 +8,7 @@ import { Routes, Route, Link, useNavigate, Outlet } from 'react-router-dom'
 import 이미지 from './img/bg.png'
 import Detail from './pages/Detail.js';
 import axois from 'axios'
+import axios from 'axios';
 
 
 
@@ -16,6 +17,7 @@ function App() {
 
   // 아주 고귀하신 데이터 
   let [shoes, setShoes] = useState(data)
+  let [buttonCount, setButtonCount] = useState(0)
 
   let navigate = useNavigate();
 
@@ -67,21 +69,67 @@ function App() {
                 >정렬</Button>
                 <Button className='main-btn'
                   onClick={()=>{
-                    axois.get('https://codingapple1.github.io/shop/data2.json')
-                    .then((결과)=>{ // ajax 요청 성공 
-                  
-                      let resultData = 결과.data
-
-                      let copy = [...shoes]
-                      let combineArry = copy.concat(resultData);
-                      console.log(combineArry)
-                      setShoes(combineArry);
+                    setButtonCount(buttonCount + 1)
+                      if(buttonCount === 0){
+                        console.log('한번')
+                        axois.get('https://codingapple1.github.io/shop/data2.json')
+                        .then((결과)=>{ // ajax 요청 성공 
                       
+                          let resultData = 결과.data
+  
+                          let copy = [...shoes]
+                          let combineArry = copy.concat(resultData);
+                          console.log(combineArry)
+                          setShoes(combineArry);
+                          // 로딩중UI 숨기기
+  
+  
+                          // 1.응용 문제 버튼 2회 누를떈 7,8,9 상품을 가져오려면? 
+                          // 버튼 누른 횟수를 기록
+                          // 2. 버튼을 세번 누를때는 상품 더 없다고 알려주기 
+                          // 3. 버튼 누르면 로딩중입니다 글자 띄우기
+                          
+  
+                        })
+                        .catch(()=>{ // ajax 요청 실패할 경우
+                          console.log('실패함')
+                          // 로딩중UI 숨기기
+  
+  
+                        })
+                      }else if(buttonCount === 1){
+                        Promise.all([axios.get('https://codingapple1.github.io/shop/data2.json'), axios.get('https://codingapple1.github.io/shop/data3.json')]).then((결과2)=>{
+                          
+                          console.log(결과2)
+                          let copyResult = [...결과2];
+                          console.log(copyResult);
 
-                    })
-                    .catch(()=>{ // ajax 요청 실패할 경우
-                      console.log('실패함')
-                    })
+                        })
+
+                        
+                      }else if(buttonCount === 3){
+
+                      }
+                    
+                      //로딩중 UI띄우기
+
+
+ 
+            
+
+          
+
+
+                    ///////////////////////////// 서버로 데이터 전송하는 POST 요청
+                    ///////////////////////////// axios.post('/서버 url', {name : 'kim'})
+
+                    ///////////////////////////// 동시에 ajax요청 여러개 하려면
+                    ///////////////////////////// Promise.all([ axios.get('/ur1'), axios.get('/url2') ]).then(()=>{})
+
+                    /////////////////////////////
+
+
+                    
                   
                   }}
                 >더보기</Button>
