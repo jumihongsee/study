@@ -18,26 +18,53 @@ let item = createSlice({
     initialState : 
     [
         {id : 0, name : 'White and Black', count : 2},
-        {id : 2, name : 'Grey Yordan', count : 1}
+        {id : 50, name : 'Grey Yordan', count : 1},
+
     ],
     
     reducers : {
+
         countUp(state, action){
-            state[action.payload].count += 1
+
+            let num = state.findIndex((a)=>{ return a.id == action.payload })
+            // findIndex :  일치하면 몇번째에 있는지 남겨줌
+            //action.payload
+            state[num].count += 1
            
         },
         addItem(state, action){
 
-           state.push(action.payload)
-           console.log(state)
-       
+
+            let findItem = state.find(a => a.id === action.payload.id);
+  
+
+            if(findItem){
+                console.log('이미배열에 있음')
+                //만약 스테이트 안에 같은 id번호가 있다면 count 만 추가하고 
+                findItem.count ++
+            }else{
+                console.log('배열에 없음')
+                // 스테이트 안에 같은 id 번호가 없다면 배열에 추가해라.
+                state.push(action.payload)
+
+            }
+
+            
+
+
+
+
+        }, 
+        deleteItem(state, action){
+            let num = state.findIndex((a)=>{ return a.id == action.payload })
+            state.splice(num, 1)
         }
     }
      
 })
 
 
-export let { countUp, addItem } = item.actions
+export let { countUp, addItem, deleteItem } = item.actions
 
 export default configureStore({ // 등록하는 곳
 

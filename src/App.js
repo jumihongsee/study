@@ -87,6 +87,7 @@ function App() {
                     <Button className='main-btn'
                       onClick={()=>{
                         setButtonCount(buttonCount + 1)
+
                         console.log('버튼카운트'+ buttonCount)
                           if(buttonCount === 0){
                             // 3. 버튼 누르면 로딩중입니다 글자 띄우기
@@ -99,7 +100,6 @@ function App() {
                               let resultData = 결과.data
                               let copy = [...shoes]
                               let combineArry = copy.concat(resultData);
-                              console.log(combineArry)
                               setShoes(combineArry);
                               // 로딩중UI 숨기기                     
                               setLoading(false)
@@ -173,6 +173,7 @@ function App() {
                                 shoes={shoes[i]}
                                 i = {i}
                                 navigate ={navigate}
+
                               ></Card>
                           
                             
@@ -268,12 +269,21 @@ function Event(){
 
 
  function Card(props){
+  
+
+ 
 
   return(
     <div className="col-md-4">
       <img
       
-        onClick={()=>{props.navigate(`/detail/${props.shoes.id}`)}}
+        onClick={()=>{
+
+          console.log('props.navigate:', props.navigate);
+          console.log('props.shoes.id:', props.shoes.id);
+
+          props.navigate(`/detail/${props.shoes.id}`)
+        }}
 
       src={`https://codingapple1.github.io/shop/shoes${props.shoes.id + 1}.jpg`} width="80%" />
       <h4>{props.shoes.title}</h4>

@@ -3,7 +3,7 @@ import { Route, useParams } from "react-router-dom"
 import styled from 'styled-components'
 import {  Nav } from 'react-bootstrap'
 import { useDispatch, useSelector } from "react-redux"
-import { addItem } from "../store"
+import { addItem } from "../store.js"
 
 //import { Context1 } from './../App.js'
 
@@ -40,7 +40,7 @@ function Detail(props){
 
   
   let {urlId} = useParams()
-  let item = state.item.find(function(a){
+  let item = props.shoes.find(function(a){
     return a.id == urlId
   })
   let [alert, setAlert] = useState(true)
@@ -105,7 +105,7 @@ function Detail(props){
               <p>{item.price}</p>
               <button className="btn btn-danger"
                 onClick={()=>{
-                  dispatch(addItem(item))
+                  dispatch(addItem({id: item.id , name: item.title, count: 1}))
                 }}
               
               >주문하기</button> 
