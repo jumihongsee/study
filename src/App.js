@@ -2,7 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {  Button, Navbar, Container, Nav } from 'react-bootstrap'
-import { createContext, useState } from 'react';
+import { createContext, useEffect, useState } from 'react';
 import  data from './data.js'
 import { Routes, Route, Link, useNavigate, Outlet } from 'react-router-dom'
 import 이미지 from './img/bg.png'
@@ -15,6 +15,24 @@ import Cart from './pages/Cart.js';
 
 
 function App() {
+
+  useEffect(()=>{
+    localStorage.setItem('watched', JSON.stringify([]))
+  },[])
+  
+  
+  let obj = {name : 'kim'}
+  localStorage.setItem('data', JSON.stringify(obj)) // JSON.stringify() 객체나 배열 을 JSON 형태로 변환
+  console.log(obj)
+  let 꺼낸거 = localStorage.getItem('data')
+  console.log(꺼낸거) //JSON 형태로 되어 있음을 확인할 수 있음 
+
+  console.log(JSON.parse(꺼낸거).name) // JSON.parse() JSON 파일을 객체나 배열형식으로 변환해줌 
+
+  // 숙제 : 유저가 상세페이지에서 봤던 상품의 번호들을 localstorage에 저장하기
+  // watched : [] <- id 값 push + 중복번호는 막아주기 (set 자료형)
+
+
 
 
   // 아주 고귀하신 데이터 
