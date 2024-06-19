@@ -9,6 +9,7 @@ import 이미지 from './img/bg.png'
 import Detail from './pages/Detail.js';
 import axios from 'axios';
 import Cart from './pages/Cart.js';
+import { useQuery } from 'react-query';
 
 //export let Context1 = createContext() // state 보관함
 
@@ -22,7 +23,6 @@ function App() {
     let watched = localStorage.getItem('watched');
 
     if(watched){
-
     }else{
       localStorage.setItem('watched', JSON.stringify([]))
     }
@@ -33,11 +33,11 @@ function App() {
   
   let obj = {name : 'kim'}
   localStorage.setItem('data', JSON.stringify(obj)) // JSON.stringify() 객체나 배열 을 JSON 형태로 변환
-  console.log(obj)
+  // console.log(obj)
   let 꺼낸거 = localStorage.getItem('data')
-  console.log(꺼낸거) //JSON 형태로 되어 있음을 확인할 수 있음 
+  //console.log(꺼낸거) //JSON 형태로 되어 있음을 확인할 수 있음 
 
-  console.log(JSON.parse(꺼낸거).name) // JSON.parse() JSON 파일을 객체나 배열형식으로 변환해줌 
+  // console.log(JSON.parse(꺼낸거).name) // JSON.parse() JSON 파일을 객체나 배열형식으로 변환해줌 
 
   // 숙제 : 유저가 상세페이지에서 봤던 상품의 번호들을 localstorage에 저장하기
   // watched : [] <- id 값 push + 중복번호는 막아주기 (set 자료형)
@@ -55,6 +55,22 @@ function App() {
 
 
   let navigate = useNavigate();
+
+  // useQuery 의 장점
+  // 성공/실패/로딩중 쉽게 파악가능  + 틈만 나면 자동으로 refetch 해줌 + ajax로 가져온 결과는 state 공유 필요없음
+  // ajax 결과 캐싱가능 
+  let result = useQuery('작명', ()=>
+    axios.get('https://codingapple1.github.io/userdata.12json')
+    .then((a)=>{ 
+      console.log('요청됨')
+      return a.data 
+      
+      }),
+      { staleTime : 2000 } // 타이머 기능  2초안에는 리패치가 안됨
+  )
+  console.log(result)
+
+
 
 
   return (
@@ -75,6 +91,13 @@ function App() {
             <Nav.Link onClick={()=>{ navigate('/event') }}>EVENT</Nav.Link> 
             
           </Nav>
+          <Nav style={{color : '#fff'}}>
+            {/*  &&로 간결하게 if문 작성  */}
+            {result.isLoading && '로딩중'}
+            {result.error && '에러남'}
+            {result.data && `Hello ${result.data.name}`}
+          </Nav>
+
         </Container>
       </Navbar>
 
