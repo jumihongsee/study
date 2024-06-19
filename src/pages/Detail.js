@@ -7,11 +7,6 @@ import { addItem } from "../store.js"
 
 //import { Context1 } from './../App.js'
 
-
-
-
-
-
 let YellowBtn =  styled.button `
 
   background : ${props => props.bg == 'true'? 'blue' : 'red'};
@@ -27,6 +22,7 @@ let Input = styled.input `
   border : 4px solid #000;
   padding : 5px;
 `
+
 
 function Detail(props){
 
