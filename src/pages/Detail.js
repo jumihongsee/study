@@ -50,7 +50,23 @@ function Detail(props){
   let [fade2, setFade2] = useState('')
 
 
+
   useEffect(()=>{
+
+    console.log(item.id)
+    let watched = localStorage.getItem('watched')
+    watched =  JSON.parse(watched)
+    watched.push(item.id)
+    watched = new Set(watched);
+    watched = Array.from(watched);
+
+    localStorage.setItem('watched', JSON.stringify(watched))
+
+  },[])
+
+
+  useEffect(()=>{
+
     // 랜더링이 된 후에 동작한다 
     // 어려운 연산이나, 서버에서 데이터를 가져올때 , 타이머를 장착하는 작업 등을 할때 사용
     // 1. 재렌더링마다 코드를 실행하고 싶엉

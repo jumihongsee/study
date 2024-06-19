@@ -17,7 +17,17 @@ import Cart from './pages/Cart.js';
 function App() {
 
   useEffect(()=>{
-    localStorage.setItem('watched', JSON.stringify([]))
+
+    //이미 watched 항목이 있으면 setItem 하지 말아줘요
+    let watched = localStorage.getItem('watched');
+
+    if(watched){
+
+    }else{
+      localStorage.setItem('watched', JSON.stringify([]))
+    }
+
+
   },[])
   
   
@@ -31,7 +41,6 @@ function App() {
 
   // 숙제 : 유저가 상세페이지에서 봤던 상품의 번호들을 localstorage에 저장하기
   // watched : [] <- id 값 push + 중복번호는 막아주기 (set 자료형)
-
 
 
 
@@ -300,7 +309,28 @@ function Event(){
           console.log('props.navigate:', props.navigate);
           console.log('props.shoes.id:', props.shoes.id);
 
+   
+
+          // let watched = localStorage.getItem('watched');
+          // watched = watched ? JSON.parse(watched) : [];
+          // let watchedSet = new Set(watched);
+          // let goodsId = props.shoes.id; // 1
+          // watchedSet.add(goodsId);
+          // watched = Array.from(watchedSet)
+
+          // localStorage.setItem('watched', JSON.stringify(watched));
+
+   
+  
+       
+
+      
+          
+
           props.navigate(`/detail/${props.shoes.id}`)
+
+
+
         }}
 
       src={`https://codingapple1.github.io/shop/shoes${props.shoes.id + 1}.jpg`} width="80%" />
