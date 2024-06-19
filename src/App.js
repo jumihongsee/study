@@ -9,6 +9,7 @@ import 이미지 from './img/bg.png'
 import axios from 'axios';
 import { useQuery } from 'react-query';
 
+
 // import Detail from './pages/Detail.js';
 // import Cart from './pages/Cart.js';
 // 필요할때 import 해주는 lazy 함수
@@ -17,6 +18,7 @@ import { useQuery } from 'react-query';
 // 그 사이에 로딩바나 안내문 같은걸 띄워줄 수 있음 Suspense 로 UI 삽입이 가능하다
 const Detail = lazy(() => import('./pages/Detail.js'));
 const Cart = lazy(() => import('./pages/Cart.js'));
+const Test = lazy(() => import('./pages/Test.js'));
 
 
 
@@ -299,8 +301,9 @@ function App() {
               <Route path='location' element={<>로케이션임</>}></Route>
           </Route>
           <Route path='/event' element={<Event />}>
-                <Route path='one' element={<h2>첫 주문시 양배추즙 서비스</h2>}></Route>
+                <Route path='one' element={ <Test></Test>}></Route>
                 <Route path='two' element={<h2>생일기념 쿠폰받기</h2>}></Route>
+            
           </Route>
 
           <Route path='*' element={<div style={{fontSize : "50vw"}}>404</div>} />
