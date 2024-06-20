@@ -52,7 +52,7 @@ function Detail(props){
     console.log(item.id)
     let watched = localStorage.getItem('watched')
     watched =  JSON.parse(watched)
-    watched.push(item.id)
+    watched.unshift(item.id)
     watched = new Set(watched);
     watched = Array.from(watched);
 

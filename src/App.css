@@ -60,6 +60,28 @@
   padding: 10px 0;
 }
 
+.goods-pop{
+  position: fixed; right: 10px; bottom: 10vh; width: 25vw; height: auto; 
+  background: #fff; border: 5px solid #000; border-radius: 10px;
+  z-index: 100;
+}
+.goods-pop .xbtn{
+  background: #000; color: #fff; 
+  display: flex; align-items: center; justify-content: flex-end;
+  padding: 0 10px;
+}
+.goods-pop .xbtn P{
+  margin-bottom: 0; padding-bottom: 10px; cursor: pointer;
+  font-size: 20px; font-weight: bold;
+}
+.goods-pop img{
+  width: 100%; background-size: cover; height: auto;
+}
+.goods-pop .goods-box p {
+  font-size: 12px; margin: 0; padding: 10px 0; 
+  border-bottom: 1px solid #000; 
+  border-top: 1px solid #000;
+}
 
 /*  애니메이션  */
 

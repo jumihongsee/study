@@ -58,16 +58,23 @@ function App() {
   // 숙제 : 유저가 상세페이지에서 봤던 상품의 번호들을 localstorage에 저장하기
   // watched : [] <- id 값 push + 중복번호는 막아주기 (set 자료형)
 
+  let watched = localStorage.getItem('watched');
+  watched = JSON.parse(watched);
+
+
 
 
   // 아주 고귀하신 데이터 
   let [shoes, setShoes] = useState(data)
 
   let [재고] = useState([10,11,12])
-  
   let [buttonCount, setButtonCount] = useState(0)
   let [popup, setPopup] = useState(false)
   let [loading, setLoading] = useState(false)
+  let [goodsPop, setGoodsPop] = useState(true);
+
+
+  
 
 
   let navigate = useNavigate();
@@ -116,6 +123,7 @@ function App() {
 
         </Container>
       </Navbar>
+      {watched && goodsPop === true && <GoodsPop watched={watched} shoes={shoes} goodsPop={goodsPop} setGoodsPop={setGoodsPop} />}
       <Suspense fallback={<>로딩중 기달</>}>
         <Routes>
 
@@ -339,6 +347,41 @@ function Event(){
       <Outlet></Outlet>
     </>
   )
+}
+
+
+function GoodsPop({ watched, shoes, goodsPop, setGoodsPop }){
+  console.log(shoes)
+  return(
+    <>
+           <div className='goods-pop'>
+            <div className='xbtn'><p onClick={()=>{
+              setGoodsPop(false)
+            }} >x</p></div>
+              {
+     
+                watched.slice(0, 3).map((a,i)=>{
+                    console.log('id값'+a)
+                  return(
+            
+                  
+                      <div className='goods-box'>
+                        <img src={`https://codingapple1.github.io/shop/shoes${a+1}.jpg`} />
+                        {/* <p>{shoes[a].title}</p> */}
+                      </div>
+
+                  )
+
+                })
+
+        
+              }
+          </div>
+    </>
+
+
+  )
+
 }
 
 
